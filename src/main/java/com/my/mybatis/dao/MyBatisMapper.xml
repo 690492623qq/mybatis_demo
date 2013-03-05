@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.mybatis.dao.MyBatisMapper">
+  <!-- 疑问 接口名的方法名 重载的情况下 id 如何处理-->
+
+  <insert id="insertMyBatis"
+          keyProperty="id" useGeneratedKeys="true"
+          parameterType="com.my.mybatis.pojo.MyBatis">
+    insert into mybatis(name,age,sex) values (#{name}, #{age}, #{sex})
+  </insert>
+
+  <!-- 记住：paramterType 如果是 pojo 对象的话 要写成 classpath ：com.my.mybatis.pojo.MyBatis
+        如果 直接写成 类名：Mybatis的话，会爆出error：com.my.mybatis.pojo.MyBatis
+  Cause: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration.
+  Cause: java.lang.RuntimeException: Error parsing Mapper XML.
+  Cause: org.apache.ibatis.builder.BuilderException: Error resolving class .
+  Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'MyBatis'.
+  Cause: java.lang.ClassNotFoundException: Cannot find class: MyBatis
+  注意最后error stack ：Cannot find class: MyBatis
+  -->
+
+  <update id="updateMyBatis" parameterType="com.my.mybatis.pojo.MyBatis">
+    UPDATE mybatis SET name = #{name} ,age = #{age} ,sex = #{sex}
+    WHERE id = #{id}
+  </update>
+
+</mapper>
